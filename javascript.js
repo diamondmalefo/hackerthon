@@ -1,29 +1,73 @@
-const container = document.querySelector("#container");
+function getComputerChoice() {
+  const random = Math.random();
 
-const content = document.createElement("div");
-content.classList.add("content");
-content.textContent = "this is addedd text";
-//paragraph
-const para = document.createElement("p");
-para.style.color = "red";
-para.textContent = "hey! im red";
-//h3
-const head3 = document.createElement("h3");
-head3.textContent = "hey! im blue";
-head3.style.color = "blue";
+  if (random < 0.33) {
+    return "rock";
+  } else if (random < 0.66) {
+    return "paper";
+  } else {
+    return "scissors";
+  }
+}
+function getHumanChoice() {
+  return prompt("Enter rock, paper, or scissors:").toLowerCase();
+}
+function playGame() {
+  let humanScore = 0;
+  let computerScore = 0;
 
-const borderDiv = document.createElement("div");
-borderDiv.style.border = "black";
-borderDiv.style.backgroundColor = "pink";
-const divH1 = document.createElement("h1");
-divH1.textContent = "Im in a div";
-borderDiv.appendChild(divH1)
-const divp1 = document.createElement("p");
-divp1.textContent = "me too!";
-borderDiv.appendChild(divp1)
+  function getComputerChoice() {
+    const random = Math.random();
 
+    if (random < 0.33) return "rock";
+    else if (random < 0.66) return "paper";
+    else return "scissors";
+  }
 
-container.appendChild(head3);
-container.appendChild(para);
-container.appendChild(content);
-container.appendChild(borderDiv);
+  function getHumanChoice() {
+    return prompt("Enter rock, paper, or scissors:").toLowerCase();
+  }
+
+  function playRound(humanChoice, computerChoice) {
+    humanChoice = humanChoice.toLowerCase();
+
+    if (humanChoice === computerChoice) {
+      console.log(`Draw! You both chose ${humanChoice}`);
+      return;
+    }
+
+    if (
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "paper" && computerChoice === "rock") ||
+      (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+      humanScore++;
+      console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+    } else {
+      computerScore++;
+      console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+    }
+  }
+
+  // 🔁 5 rounds
+  for (let i = 0; i < 5; i++) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+
+    playRound(humanSelection, computerSelection);
+  }
+
+  // 🏁 Final result
+  console.log("Final Score:");
+  console.log(`You: ${humanScore} | Computer: ${computerScore}`);
+
+  if (humanScore > computerScore) {
+    console.log("🏆 You won the game!");
+  } else if (computerScore > humanScore) {
+    console.log("💻 Computer wins the game!");
+  } else {
+    console.log("🤝 It's a draw!");
+  }
+}
+
+playGame();
